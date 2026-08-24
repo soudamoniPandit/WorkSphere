@@ -1,6 +1,6 @@
 # Freelance Marketplace
 
-A full-stack marketplace web app connecting clients with freelancers. Built with Next.js (App Router), TypeScript, PostgreSQL, and Prisma.
+A full-stack marketplace web app connecting clients with freelancers. Built with Next.js (App Router), TypeScript, and Supabase.
 
 ## What is this?
 
@@ -9,18 +9,17 @@ This platform lets clients post freelance jobs and hire talent, while freelancer
 ### Key Features
 - **Authentication & Roles**: Role-based signup (Client vs Freelancer) with JWT auth.
 - **Projects & Proposals**: Clients can create project listings with budgets, deadlines, and required skills. Freelancers can submit proposals with custom quotes.
-- **Milestones**: Break projects down into trackable milestone deliverables with approval status.
+- **Milestones & Contracts**: Track project deliverables and work contracts.
 - **Messaging**: Direct messaging / chat between clients and freelancers for project discussion.
 - **Reviews & Ratings**: Mutual feedback system after project completion.
-- **Profiles**: Portfolio showcase and skill tags for freelancers; company info for clients.
+- **Profiles & Portfolio**: Showcase past work and skill tags for freelancers; company info for clients.
 
 ---
 
 ## Tech Stack
 
 - **Frontend & Backend**: Next.js 14 (App Router, Server Actions / Route Handlers)
-- **Database**: PostgreSQL
-- **ORM**: Prisma
+- **Database & API**: Supabase (PostgreSQL via HTTPS REST Client)
 - **Auth**: JWT + bcrypt
 - **Icons**: Lucide React
 
@@ -39,24 +38,18 @@ cd freelance-marketplace
 npm install
 ```
 
-### 3. Setup environment variables
-Create a `.env` file in the root directory (or copy `.env.example`):
+### 3. Database Setup (Supabase)
+1. In your [Supabase Dashboard](https://supabase.com/dashboard), go to the **SQL Editor**.
+2. Open `supabase-schema.sql` from the project root, paste it into the SQL Editor, and click **Run**.
+
+### 4. Setup environment variables
+Create a `.env` file in `freelance-marketplace/`:
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/freelance_db?schema=public"
-DIRECT_URL="postgresql://user:password@localhost:5432/freelance_db?schema=public"
+NEXT_PUBLIC_SUPABASE_URL="https://<your-project-ref>.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="<your-anon-key>"
+SUPABASE_SERVICE_ROLE_KEY="<your-service-role-key>"
 JWT_SECRET="your-secret-key"
 JWT_EXPIRES_IN="7d"
-```
-
-### 4. Push database schema
-Push the Prisma schema to your PostgreSQL database:
-```bash
-npx prisma db push
-```
-
-*(Optional: generate client if needed)*
-```bash
-npx prisma generate
 ```
 
 ### 5. Run the dev server
@@ -79,6 +72,6 @@ app/                  # Next.js App Router (pages & API routes)
   ├── projects/       # Project browse & detail views
   └── profile/        # User profile view/edit
 components/           # Reusable UI components
-prisma/               # Database schema & migrations
-src/                  # Server utilities, auth helpers, DB client
+supabase-schema.sql   # 1-Click database SQL schema
+src/                  # Server services, auth helpers, Supabase client
 ```

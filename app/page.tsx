@@ -912,7 +912,7 @@ export default function HomePage() {
               Engineered for Speed, Reliability & Security
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px', margin: '8px auto 0' }}>
-              Built with Next.js App Router, Express Controller-Service architecture, TypeScript, and Prisma ORM.
+              Built with Next.js App Router, Controller-Service architecture, TypeScript, and Supabase.
             </p>
           </div>
 
@@ -998,15 +998,14 @@ export default function HomePage() {
                 <Layers size={24} className="text-aqua" />
               </div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: '10px', color: 'var(--text-main)' }}>
-                Relational Prisma Schema
+                Relational Supabase Schema
               </h3>
               <p style={{ color: 'var(--text-muted)', lineHeight: '1.65', fontSize: '0.92rem', marginBottom: '16px' }}>
-                13 relational entities with composite unique constraints (<code style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-aqua)' }}>@@unique([projectId, freelancerId])</code>) and index optimization.
+                Full relational integrity with foreign keys, cascade deletes, and indexing across all marketplace entities.
               </p>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 <span className="badge badge-aqua">PostgreSQL</span>
-                <span className="badge badge-violet">Prisma ORM</span>
-                <span className="badge badge-neutral">Unique Safeguards</span>
+                <span className="badge badge-violet">Supabase</span>
               </div>
             </div>
           </div>

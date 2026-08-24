@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProfileService } from '@/lib/server/services/profile.service';
 import { getAuthUser, requireRole, AppError } from '@/lib/server/auth';
-import { Role } from '@prisma/client';
+import { Role } from '@/types/database';
+
 
 export async function DELETE(
   req: NextRequest,

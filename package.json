@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
     "@supabase/supabase-js": "^2.109.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -28,7 +27,6 @@
     "@types/node": "^20.17.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
-    "prisma": "^5.22.0",
     "typescript": "^5.6.3"
   }
 }
