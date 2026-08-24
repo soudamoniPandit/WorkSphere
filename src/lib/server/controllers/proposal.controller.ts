@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProposalService } from '../services/proposal.service';
 import { getAuthUser, requireRole, AppError } from '../auth';
-import { Role, ProposalStatus } from '@prisma/client';
+import { Role, ProposalStatus } from '@/types/database';
 
 export class ProposalController {
   static async submitProposal(req: NextRequest, params: { id: string }) {

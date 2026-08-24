@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatService } from '../services/chat.service';
 import { getAuthUser, requireRole, AppError } from '../auth';
-import { Role } from '@prisma/client';
+import { Role } from '@/types/database';
+
 
 export class ChatController {
   static async getConversations(req: NextRequest) {

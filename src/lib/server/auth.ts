@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { verifyToken, AuthUserPayload } from './jwt';
-import { Role } from '@prisma/client';
+import { Role } from '@/types/database';
+
 
 export class AppError extends Error {
   public statusCode: number;
@@ -26,11 +27,12 @@ export const getAuthUser = (req: NextRequest): AuthUserPayload => {
   }
 };
 
-export const requireRole = (user: AuthUserPayload, allowedRoles: Role[]): void => {
-  if (!allowedRoles.includes(user.role)) {
+export const requireRole = (user: AuthUserPayload, allowedRoles: (Role | 'CLIENT' | 'FREELANCER' | 'ADMIN')[]): void => {
+  if (!allowedRoles.map(String).includes(String(user.role))) {
     throw new AppError(
       `Access denied. Required role: [${allowedRoles.join(', ')}]. Your role: ${user.role}`,
       403
     );
   }
 };
+

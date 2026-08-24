@@ -4,15 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint",
-    "prisma:generate": "prisma generate --schema=prisma/schema.prisma",
-    "prisma:validate": "prisma validate --schema=prisma/schema.prisma",
-    "postinstall": "prisma generate --schema=prisma/schema.prisma"
+    "lint": "next lint"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "@supabase/supabase-js": "^2.109.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

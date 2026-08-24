@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProjectService } from '../services/project.service';
 import { getAuthUser, requireRole, AppError } from '../auth';
-import { Role, ProjectStatus } from '@prisma/client';
+import { Role, ProjectStatus } from '@/types/database';
+
 
 export class ProjectController {
   static async createProject(req: NextRequest) {

@@ -1,9 +1,10 @@
-import { prisma } from '../../prisma';
+import { supabase } from '@/lib/supabase';
 import { AppError } from '../auth';
+import { ProjectStatus } from '@/types/database';
 
 export interface CreateReviewDTO {
   projectId: string;
-  rating: number; // 1 to 5
+  rating: number;
   comment: string;
 }
 
@@ -18,82 +19,142 @@ export class ReviewService {
     }
 
     // 1. Check project and client ownership
-    const project = await prisma.project.findUnique({
-      where: { id: dto.projectId },
-      include: {
-        client: true,
-        proposals: {
-          where: { status: 'ACCEPTED' },
-          include: { freelancer: { include: { user: true } } },
-        },
-      },
-    });
+    const { data: project } = await supabase
+      .from('projects')
+      .select(`
+        id,
+        client_profiles (user_id),
+        proposals (
+          id,
+          status,
+          freelancer_profiles (user_id)
+        )
+      `)
+      .eq('id', dto.projectId)
+      .maybeSingle();
 
     if (!project) {
       throw new AppError('Project not found', 404);
     }
 
-    if (project.client.userId !== reviewerUserId) {
+    const client = Array.isArray(project.client_profiles)
+      ? project.client_profiles[0]
+      : project.client_profiles;
+
+    if (!client || client.user_id !== reviewerUserId) {
       throw new AppError('Only the project client can submit a review for this project.', 403);
     }
 
     // 2. Identify the hired freelancer
-    const acceptedProposal = project.proposals.find((p) => p.status === 'ACCEPTED');
+    const proposals = project.proposals || [];
+    const acceptedProposal = proposals.find((p: any) => p.status === 'ACCEPTED');
     if (!acceptedProposal) {
       throw new AppError('Cannot review a project without an accepted freelancer.', 400);
     }
 
-    const revieweeUserId = acceptedProposal.freelancer.userId;
+    const fp = Array.isArray(acceptedProposal.freelancer_profiles)
+      ? acceptedProposal.freelancer_profiles[0]
+      : acceptedProposal.freelancer_profiles;
+
+    if (!fp || !fp.user_id) {
+      throw new AppError('Freelancer user record not found.', 400);
+    }
+
+    const targetUserId = fp.user_id;
 
     // 3. Prevent duplicate review
-    const existingReview = await prisma.review.findUnique({
-      where: {
-        projectId_reviewerId: {
-          projectId: dto.projectId,
-          reviewerId: reviewerUserId,
-        },
-      },
-    });
+    const { data: existingReview } = await supabase
+      .from('reviews')
+      .select('id')
+      .eq('project_id', dto.projectId)
+      .eq('author_id', reviewerUserId)
+      .maybeSingle();
 
     if (existingReview) {
       throw new AppError('You have already submitted a review for this project.', 400);
     }
 
-    // 4. Create review & mark project as COMPLETED if not already
-    return await prisma.$transaction(async (tx) => {
-      const review = await tx.review.create({
-        data: {
-          projectId: dto.projectId,
-          reviewerId: reviewerUserId,
-          revieweeId: revieweeUserId,
-          rating: Math.round(dto.rating),
-          comment: dto.comment.trim(),
-        },
-        include: {
-          reviewer: { select: { id: true, fullName: true, avatarUrl: true } },
-          project: { select: { id: true, title: true } },
-        },
-      });
+    // 4. Create review & mark project as COMPLETED
+    const { data: review, error } = await supabase
+      .from('reviews')
+      .insert({
+        project_id: dto.projectId,
+        author_id: reviewerUserId,
+        target_id: targetUserId,
+        rating: Math.round(dto.rating),
+        comment: dto.comment.trim(),
+      })
+      .select(`
+        id,
+        rating,
+        comment,
+        created_at,
+        users!author_id (id, full_name, avatar_url),
+        projects (id, title)
+      `)
+      .single();
 
-      // Update project status to COMPLETED
-      await tx.project.update({
-        where: { id: dto.projectId },
-        data: { status: 'COMPLETED' },
-      });
+    if (error || !review) {
+      throw new AppError(`Failed to save review: ${error?.message}`, 500);
+    }
 
-      return review;
-    });
+    await supabase
+      .from('projects')
+      .update({ status: ProjectStatus.COMPLETED, updated_at: new Date().toISOString() })
+      .eq('id', dto.projectId);
+
+    const reviewer = Array.isArray(review.users) ? review.users[0] : review.users;
+    const pr = Array.isArray(review.projects) ? review.projects[0] : review.projects;
+
+    return {
+      id: review.id,
+      rating: review.rating,
+      comment: review.comment,
+      createdAt: review.created_at,
+      reviewer: reviewer
+        ? { id: reviewer.id, fullName: reviewer.full_name, avatarUrl: reviewer.avatar_url }
+        : null,
+      project: pr ? { id: pr.id, title: pr.title } : null,
+    };
   }
 
   static async getProjectReviews(projectId: string) {
-    return await prisma.review.findMany({
-      where: { projectId },
-      include: {
-        reviewer: { select: { id: true, fullName: true, avatarUrl: true } },
-        reviewee: { select: { id: true, fullName: true, avatarUrl: true } },
-        project: { select: { id: true, title: true } },
-      },
-      orderBy: { createdAt: 'desc' },
+    const { data: reviews, error } = await supabase
+      .from('reviews')
+      .select(`
+        id,
+        rating,
+        comment,
+        created_at,
+        reviewer:users!author_id (id, full_name, avatar_url),
+        target:users!target_id (id, full_name, avatar_url),
+        project:projects (id, title)
+      `)
+      .eq('project_id', projectId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw new AppError(`Failed to fetch reviews: ${error.message}`, 500);
+    }
+
+    return (reviews || []).map((r: any) => {
+      const reviewer = Array.isArray(r.reviewer) ? r.reviewer[0] : r.reviewer;
+      const target = Array.isArray(r.target) ? r.target[0] : r.target;
+      const pr = Array.isArray(r.project) ? r.project[0] : r.project;
+
+      return {
+        id: r.id,
+        rating: r.rating,
+        comment: r.comment,
+        createdAt: r.created_at,
+        reviewer: reviewer
+          ? { id: reviewer.id, fullName: reviewer.full_name, avatarUrl: reviewer.avatar_url }
+          : null,
+        reviewee: target
+          ? { id: target.id, fullName: target.full_name, avatarUrl: target.avatar_url }
+          : null,
+        project: pr ? { id: pr.id, title: pr.title } : null,
+      };
     });
   }
 }

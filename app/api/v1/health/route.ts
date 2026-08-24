@@ -1,32 +1,33 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { supabase } from '@/lib/supabase';
 
 export async function GET() {
   let dbStatus = 'UNKNOWN';
   let dbError: string | null = null;
 
   try {
-    await prisma.$queryRaw`SELECT 1`;
-    dbStatus = 'CONNECTED';
+    const { error } = await supabase.from('users').select('id').limit(1);
+    if (error) {
+      dbStatus = 'DISCONNECTED';
+      dbError = error.message;
+    } else {
+      dbStatus = 'CONNECTED';
+    }
   } catch (err: any) {
     dbStatus = 'DISCONNECTED';
-    dbError = err.message || 'Database connection error';
+    dbError = err.message || 'Supabase connection error';
   }
 
-  const rawUrl = process.env.DATABASE_URL || '';
-  const sanitizedHost = rawUrl.includes('@')
-    ? rawUrl.split('@')[1]?.split('/')[0]
-    : rawUrl ? 'CUSTOM_URL_SET' : 'NOT_SET';
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
 
   return NextResponse.json({
     success: dbStatus === 'CONNECTED',
     data: {
       status: 'UP',
       database: dbStatus,
-      dbHost: sanitizedHost,
-      hasDatabaseUrl: Boolean(process.env.DATABASE_URL),
-      hasDirectUrl: Boolean(process.env.DIRECT_URL),
-      hasJwtSecret: Boolean(process.env.JWT_SECRET),
+      supabaseConfigured: Boolean(supabaseUrl),
+      supabaseUrlHost: supabaseUrl ? supabaseUrl.replace(/^https?:\/\//, '') : 'NOT_CONFIGURED',
       dbError,
       environment: process.env.NODE_ENV || 'development',
       timestamp: new Date().toISOString(),
@@ -34,4 +35,3 @@ export async function GET() {
     },
   });
 }
-
