@@ -2,32 +2,33 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 let clientInstance: SupabaseClient | null = null;
 
-export function getSupabaseClient(): SupabaseClient {
+/**
+ * Public / Browser Supabase Client.
+ * Connects using NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.
+ * Safe for use in browser contexts.
+ */
+export function getSupabaseBrowserClient(): SupabaseClient {
   if (!clientInstance) {
-    const supabaseUrl =
-      process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      process.env.SUPABASE_URL ||
-      'https://sirmbpumzdqfvywprufy.supabase.co';
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '';
 
-    const supabaseKey =
-      process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-      process.env.SUPABASE_ANON_KEY ||
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.supabase_build_placeholder_key';
-
-    clientInstance = createClient(supabaseUrl, supabaseKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
-    });
+    clientInstance = createClient(
+      supabaseUrl || 'https://placeholder.supabase.co',
+      publishableKey || 'placeholder-key',
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+        },
+      }
+    );
   }
   return clientInstance;
 }
 
 export const supabase = new Proxy({} as SupabaseClient, {
   get(_target, prop) {
-    const client = getSupabaseClient() as any;
+    const client = getSupabaseBrowserClient() as any;
     const value = client[prop];
     if (typeof value === 'function') {
       return value.bind(client);

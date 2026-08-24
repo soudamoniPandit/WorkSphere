@@ -1,6 +1,7 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '../supabase';
 import { AppError } from '../auth';
 import { ProjectStatus, Role, ProposalStatus } from '@/types/database';
+
 
 export interface CreateProjectDTO {
   title: string;

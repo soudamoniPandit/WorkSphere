@@ -1,8 +1,9 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '../supabase';
 import { hashPassword, comparePassword } from '../password';
 import { generateToken } from '../jwt';
 import { AppError } from '../auth';
 import { Role } from '@/types/database';
+
 
 export interface RegisterDTO {
   email: string;

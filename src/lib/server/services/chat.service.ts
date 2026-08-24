@@ -1,6 +1,7 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '../supabase';
 import { AppError } from '../auth';
 import { Role, ProposalStatus } from '@/types/database';
+
 
 export class ChatService {
   static async getConversations(userId: string) {

@@ -1,5 +1,6 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '../supabase';
 import { AppError } from '../auth';
+
 
 export interface UpdateClientProfileDTO {
   fullName?: string;

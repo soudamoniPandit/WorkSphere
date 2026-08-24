@@ -1,6 +1,7 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '../supabase';
 import { AppError } from '../auth';
 import { Role, ProposalStatus, ProjectStatus } from '@/types/database';
+
 
 export interface SubmitProposalDTO {
   coverLetter: string;

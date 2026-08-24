@@ -46,8 +46,8 @@ npm install
 Create a `.env` file in `freelance-marketplace/`:
 ```env
 NEXT_PUBLIC_SUPABASE_URL="https://<your-project-ref>.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="<your-anon-key>"
-SUPABASE_SERVICE_ROLE_KEY="<your-service-role-key>"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="<your-publishable-key>"
+SUPABASE_SECRET_KEY="<your-secret-key>"
 JWT_SECRET="your-secret-key"
 JWT_EXPIRES_IN="7d"
 ```
