@@ -67,13 +67,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(20px, 4vw, 40px) clamp(12px, 3vw, 24px)' }}>
       <div
         className="glass-panel"
         style={{
           width: '100%',
           maxWidth: '480px',
-          padding: '40px 36px',
+          padding: 'clamp(24px, 5vw, 40px) clamp(18px, 4.5vw, 36px)',
           borderRadius: '24px',
           background: 'var(--bg-panel)',
           boxShadow: 'var(--card-shadow)',

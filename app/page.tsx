@@ -48,26 +48,27 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '0 0 100px' }}>
-      <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '40px 24px 0' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '0 0 100px', overflowX: 'hidden' }}>
+      <div style={{ maxWidth: '1320px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(14px, 3.5vw, 24px) 0' }}>
         
         {/* ================= HERO SECTION (Reference Image 2) ================= */}
         <section
+          className="landing-hero-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
             alignItems: 'center',
-            gap: '48px',
-            padding: '40px 0 60px',
+            gap: '40px',
+            padding: '20px 0 50px',
             position: 'relative',
           }}
         >
           {/* Hero Left: Editorial Copy & CTAs */}
-          <div style={{ maxWidth: '580px' }}>
+          <div style={{ width: '100%', maxWidth: '580px' }}>
             <h1
               className="editorial-title"
               style={{
-                fontSize: 'clamp(2.8rem, 5.5vw, 4.4rem)',
+                fontSize: 'clamp(2.2rem, 5.5vw, 4.4rem)',
                 color: 'var(--text-main)',
                 marginBottom: '20px',
               }}
@@ -89,9 +90,9 @@ export default function HomePage() {
             <p
               style={{
                 color: 'var(--text-muted)',
-                fontSize: 'clamp(1.05rem, 1.8vw, 1.22rem)',
+                fontSize: 'clamp(1rem, 1.8vw, 1.22rem)',
                 lineHeight: '1.65',
-                marginBottom: '36px',
+                marginBottom: '32px',
                 maxWidth: '500px',
               }}
             >
@@ -99,18 +100,18 @@ export default function HomePage() {
             </p>
 
             {/* CTAs */}
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '32px' }}>
+            <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '32px' }}>
               <Link
                 href="/projects"
                 className="btn-primary"
-                style={{ padding: '14px 28px', fontSize: '1rem' }}
+                style={{ padding: '13px 26px', fontSize: '0.98rem' }}
               >
                 Explore projects <ArrowRight size={17} />
               </Link>
               <Link
                 href="/freelancers"
                 className="btn-secondary"
-                style={{ padding: '13px 26px', fontSize: '1rem' }}
+                style={{ padding: '12px 24px', fontSize: '0.98rem' }}
               >
                 <Users size={17} className="text-aqua" /> Find talent
               </Link>
@@ -130,30 +131,34 @@ export default function HomePage() {
                 background: 'var(--bg-input)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '14px',
-                padding: '6px 8px 6px 16px',
+                padding: '6px 8px 6px 14px',
                 maxWidth: '480px',
+                width: '100%',
+                gap: '8px',
               }}
             >
-              <Search size={18} className="text-aqua" style={{ marginRight: '10px', flexShrink: 0 }} />
+              <Search size={18} className="text-aqua" style={{ flexShrink: 0 }} />
               <input
                 type="text"
-                placeholder="Search skills, projects (e.g. React, UI/UX)..."
+                placeholder="Search skills, projects (e.g. React)..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={{
                   flex: 1,
+                  minWidth: 0,
                   background: 'none',
                   border: 'none',
                   color: 'var(--text-main)',
                   fontSize: '0.92rem',
                   outline: 'none',
                   boxShadow: 'none',
+                  padding: '6px 0',
                 }}
               />
               <button
                 type="submit"
                 className="btn-aqua"
-                style={{ padding: '8px 16px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+                style={{ padding: '8px 16px', fontSize: '0.85rem', whiteSpace: 'nowrap', flexShrink: 0 }}
               >
                 Search
               </button>
@@ -162,12 +167,16 @@ export default function HomePage() {
 
           {/* Hero Right: Floating Layered Editorial Collage */}
           <div
+            className="hero-collage-container"
             style={{
               position: 'relative',
               minHeight: '440px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              width: '100%',
+              maxWidth: '540px',
+              margin: '0 auto',
             }}
           >
             {/* Ambient Constellation Network Lines SVG */}
@@ -1007,7 +1016,7 @@ export default function HomePage() {
         <section
           className="glass-panel"
           style={{
-            padding: '36px',
+            padding: 'clamp(20px, 4vw, 36px)',
             borderRadius: '18px',
             background: 'var(--bg-panel)',
           }}
@@ -1054,7 +1063,7 @@ export default function HomePage() {
             <div
               style={{
                 background: 'var(--bg-input)',
-                padding: '20px',
+                padding: '16px',
                 borderRadius: '12px',
                 border: '1px solid var(--border-color)',
               }}
@@ -1082,7 +1091,7 @@ export default function HomePage() {
               <pre
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.88rem',
+                  fontSize: '0.84rem',
                   color: 'var(--accent-lavender)',
                   lineHeight: '1.6',
                   overflowX: 'auto',
@@ -1095,6 +1104,34 @@ export default function HomePage() {
         </section>
 
       </div>
+
+      <style jsx global>{`
+        @media (max-width: 960px) {
+          .landing-hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
+          }
+        }
+        @media (max-width: 580px) {
+          .hero-collage-container {
+            min-height: 380px !important;
+            transform: scale(0.88);
+            transform-origin: top center;
+            margin-bottom: -30px !important;
+          }
+          .categories-2x2-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 390px) {
+          .hero-collage-container {
+            min-height: 340px !important;
+            transform: scale(0.76);
+            transform-origin: top center;
+            margin-bottom: -60px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

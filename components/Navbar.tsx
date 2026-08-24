@@ -64,6 +64,7 @@ export default function Navbar() {
 
   return (
     <nav
+      className="worksphere-navbar"
       style={{
         background: 'var(--nav-bg)',
         backdropFilter: 'blur(16px)',
@@ -83,7 +84,7 @@ export default function Navbar() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '20px',
+          gap: '12px',
         }}
       >
         {/* Brand Logo */}
@@ -98,11 +99,12 @@ export default function Navbar() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '8px',
             textDecoration: 'none',
+            flexShrink: 0,
           }}
         >
-          <WorkSphereLogo size={36} withText={true} />
+          <WorkSphereLogo size={34} withText={true} />
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -362,8 +364,8 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Right Section: Notification, Theme Toggle & User Auth */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        {/* Right Section: Notification, Theme Toggle, User Avatar & Mobile Hamburger */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {/* Notification Bell */}
           <button
             type="button"
@@ -381,7 +383,7 @@ export default function Navbar() {
               borderRadius: '8px',
             }}
           >
-            <Bell size={19} />
+            <Bell size={18} />
             <span
               style={{
                 position: 'absolute',
@@ -405,9 +407,9 @@ export default function Navbar() {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: '8px',
                   cursor: 'pointer',
-                  padding: '4px 8px',
+                  padding: '4px 6px',
                   borderRadius: '12px',
                   background: userMenuOpen ? 'var(--bg-surface)' : 'transparent',
                   transition: 'background 180ms ease',
@@ -416,8 +418,8 @@ export default function Navbar() {
                 {/* Circular Avatar */}
                 <div
                   style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '34px',
+                    height: '34px',
                     borderRadius: '50%',
                     background:
                       user.role === 'CLIENT'
@@ -428,14 +430,15 @@ export default function Navbar() {
                     justifyContent: 'center',
                     color: '#FFFFFF',
                     fontWeight: '800',
-                    fontSize: '0.95rem',
+                    fontSize: '0.9rem',
                     border: '1.5px solid var(--border-color)',
+                    flexShrink: 0,
                   }}
                 >
                   {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'}
                 </div>
 
-                <div style={{ textAlign: 'left', display: 'none', minWidth: '80px' }} className="user-text-info">
+                <div style={{ textAlign: 'left', minWidth: '80px' }} className="user-text-info">
                   <div style={{ fontWeight: '700', fontSize: '0.85rem', color: 'var(--text-main)', lineHeight: 1.2 }}>
                     {user.fullName}
                   </div>
@@ -444,7 +447,7 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                <ChevronDown size={14} style={{ color: 'var(--text-dim)' }} />
+                <ChevronDown size={13} style={{ color: 'var(--text-dim)' }} className="user-dropdown-chevron" />
               </div>
 
               {/* User Dropdown Menu */}
@@ -475,6 +478,7 @@ export default function Navbar() {
 
                   <Link
                     href="/profile"
+                    onClick={() => setUserMenuOpen(false)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -520,17 +524,18 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="desktop-auth-buttons" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Link
                 href="/login"
                 style={{
                   color: 'var(--text-main)',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  fontSize: '0.92rem',
-                  padding: '8px 16px',
+                  fontSize: '0.9rem',
+                  padding: '7px 14px',
                   borderRadius: '10px',
                   transition: 'color 180ms ease',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 Log in
@@ -538,7 +543,7 @@ export default function Navbar() {
               <Link
                 href="/register"
                 className="btn-primary"
-                style={{ fontSize: '0.9rem', padding: '9px 18px' }}
+                style={{ fontSize: '0.88rem', padding: '8px 16px', whiteSpace: 'nowrap' }}
               >
                 Get started
               </Link>
@@ -549,14 +554,18 @@ export default function Navbar() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="mobile-menu-btn"
+            aria-label="Toggle navigation menu"
             style={{
               display: 'none',
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-color)',
               color: 'var(--text-main)',
-              padding: '8px',
+              padding: '7px 9px',
               borderRadius: '10px',
               cursor: 'pointer',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
             }}
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -567,67 +576,212 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div
+          className="mobile-nav-drawer"
           style={{
-            padding: '20px 8px',
+            padding: '16px 8px 12px',
             borderTop: '1px solid var(--border-color)',
-            marginTop: '12px',
+            marginTop: '10px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
+            gap: '8px',
           }}
         >
-          {user?.role === 'CLIENT' ? (
+          {user ? (
             <>
-              <Link href="/client/dashboard" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <Briefcase size={16} /> Dashboard
-              </Link>
-              <Link href="/projects/create" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <PlusCircle size={16} /> Post Project
-              </Link>
-              <Link href="/client/projects" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <FolderKanban size={16} /> My Projects
-              </Link>
-              <Link href="/messages" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <MessageSquare size={16} /> Messages
-              </Link>
-              <Link href="/profile" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <User size={16} /> Profile
-              </Link>
-            </>
-          ) : user?.role === 'FREELANCER' ? (
-            <>
-              <Link href="/freelancer/dashboard" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <Search size={16} /> Discover
-              </Link>
-              <Link href="/freelancer/proposals" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <FileText size={16} /> Proposals
-              </Link>
-              <Link href="/projects" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <FolderKanban size={16} /> Projects
-              </Link>
-              <Link href="/freelancer/work" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <CheckCircle2 size={16} /> My Work
-              </Link>
-              <Link href="/messages" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <MessageSquare size={16} /> Messages
-              </Link>
-              <Link href="/profile" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                <Sparkles size={16} /> Portfolio & Profile
-              </Link>
+              {/* User summary card inside mobile menu */}
+              <div
+                style={{
+                  padding: '12px 14px',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  marginBottom: '4px',
+                }}
+              >
+                <div
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '50%',
+                    background:
+                      user.role === 'CLIENT'
+                        ? 'linear-gradient(135deg, #F48AC2 0%, #7C3AED 100%)'
+                        : 'linear-gradient(135deg, #25D9D2 0%, #7C3AED 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#FFFFFF',
+                    fontWeight: '800',
+                    fontSize: '1rem',
+                  }}
+                >
+                  {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'}
+                </div>
+                <div>
+                  <div style={{ fontWeight: '800', fontSize: '0.92rem', color: 'var(--text-main)' }}>
+                    {user.fullName}
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--accent-aqua)', fontWeight: '600' }}>
+                    {user.role === 'CLIENT' ? 'Client Account' : 'Verified Freelancer'}
+                  </div>
+                </div>
+              </div>
+
+              {user.role === 'CLIENT' ? (
+                <>
+                  <Link
+                    href="/client/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <Briefcase size={16} className="text-violet" /> Dashboard
+                  </Link>
+                  <Link
+                    href="/projects/create"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <PlusCircle size={16} className="text-pink" /> Post Project
+                  </Link>
+                  <Link
+                    href="/client/projects"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <FolderKanban size={16} className="text-aqua" /> My Projects
+                  </Link>
+                  <Link
+                    href="/messages"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <MessageSquare size={16} className="text-pink" /> Messages
+                  </Link>
+                  <Link
+                    href="/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <User size={16} className="text-lavender" /> Profile
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/freelancer/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <Search size={16} className="text-aqua" /> Discover
+                  </Link>
+                  <Link
+                    href="/freelancer/proposals"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <FileText size={16} className="text-pink" /> Proposals
+                  </Link>
+                  <Link
+                    href="/projects"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <FolderKanban size={16} className="text-violet" /> Projects
+                  </Link>
+                  <Link
+                    href="/freelancer/work"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <CheckCircle2 size={16} className="text-success" /> My Work
+                  </Link>
+                  <Link
+                    href="/messages"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <MessageSquare size={16} className="text-pink" /> Messages
+                  </Link>
+                  <Link
+                    href="/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+                  >
+                    <Sparkles size={16} className="text-aqua" /> Portfolio & Profile
+                  </Link>
+                </>
+              )}
+
+              {/* Logout inside mobile drawer */}
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleLogout();
+                }}
+                className="btn-secondary"
+                style={{
+                  width: '100%',
+                  justifyContent: 'flex-start',
+                  padding: '10px 14px',
+                  color: 'var(--accent-pink)',
+                  borderColor: 'var(--border-pink)',
+                  background: 'var(--accent-pink-subtle)',
+                  marginTop: '4px',
+                }}
+              >
+                <LogOut size={16} /> Log Out
+              </button>
             </>
           ) : (
             <>
-              <Link href="/projects" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                Explore work
+              <Link
+                href="/projects"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-secondary"
+                style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+              >
+                <FolderKanban size={16} className="text-violet" /> Explore work
               </Link>
-              <Link href="/freelancers" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                Find talent
+              <Link
+                href="/freelancers"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-secondary"
+                style={{ width: '100%', justifyContent: 'flex-start', padding: '10px 14px' }}
+              >
+                <Search size={16} className="text-aqua" /> Find talent
               </Link>
-              <Link href="/login" className="btn-secondary" style={{ width: '100%', justifyContent: 'flex-start' }}>
-                Log in
+              
+              <div style={{ height: '1px', background: 'var(--border-color)', margin: '6px 0' }} />
+              
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-secondary"
+                style={{ width: '100%', justifyContent: 'center', padding: '11px 16px' }}
+              >
+                <User size={16} /> Log in
               </Link>
-              <Link href="/register" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                Get started
+              <Link
+                href="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-primary"
+                style={{ width: '100%', justifyContent: 'center', padding: '11px 16px' }}
+              >
+                <Sparkles size={16} /> Get started
               </Link>
             </>
           )}
@@ -639,16 +793,30 @@ export default function Navbar() {
           .desktop-nav-links {
             display: none !important;
           }
+          .desktop-auth-buttons {
+            display: none !important;
+          }
           .mobile-menu-btn {
             display: inline-flex !important;
           }
           .user-text-info {
             display: none !important;
           }
+          .user-dropdown-chevron {
+            display: none !important;
+          }
         }
         @media (min-width: 881px) {
           .user-text-info {
             display: block !important;
+          }
+          .user-dropdown-chevron {
+            display: block !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .worksphere-navbar {
+            padding: 10px 14px !important;
           }
         }
       `}</style>

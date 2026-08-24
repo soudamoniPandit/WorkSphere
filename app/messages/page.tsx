@@ -174,7 +174,7 @@ function MessagesContent() {
           </div>
         ) : (
           <div
-            className="glass-panel messages-split-view"
+            className={`glass-panel messages-split-view ${activeConvId ? 'has-active-conv' : 'no-active-conv'}`}
             style={{
               display: 'grid',
               gridTemplateColumns: '340px 1fr',
@@ -186,6 +186,7 @@ function MessagesContent() {
           >
             {/* ================= LEFT CONVERSATION LIST (Reference Image 4) ================= */}
             <div
+              className="conv-list-panel"
               style={{
                 borderRight: '1px solid var(--border-color)',
                 background: 'var(--bg-surface)',
@@ -277,23 +278,44 @@ function MessagesContent() {
 
             {/* ================= RIGHT ACTIVE CHAT STREAM (Reference Image 4) ================= */}
             {activeConvData ? (
-              <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <div className="conv-chat-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 {/* Header */}
                 <div
                   style={{
-                    padding: '16px 24px',
+                    padding: '16px 20px',
                     borderBottom: '1px solid var(--border-color)',
                     background: 'var(--bg-panel)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '10px',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <button
+                      onClick={() => setActiveConvId(null)}
+                      className="mobile-back-conv-btn"
+                      style={{
+                        background: 'var(--bg-input)',
+                        border: '1px solid var(--border-color)',
+                        borderRadius: '8px',
+                        color: 'var(--text-main)',
+                        cursor: 'pointer',
+                        padding: '6px 8px',
+                        display: 'none',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      title="Back to conversations"
+                    >
+                      <ArrowLeft size={16} />
+                    </button>
+
                     <div
                       style={{
-                        width: '42px',
-                        height: '42px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
                         background: 'linear-gradient(135deg, #F48AC2 0%, #7C3AED 100%)',
                         display: 'flex',
@@ -302,6 +324,7 @@ function MessagesContent() {
                         color: '#FFFFFF',
                         fontWeight: '800',
                         fontSize: '1rem',
+                        flexShrink: 0,
                       }}
                     >
                       {otherUser?.fullName ? otherUser.fullName.charAt(0).toUpperCase() : 'U'}
@@ -309,21 +332,21 @@ function MessagesContent() {
 
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontWeight: '800', fontSize: '1.05rem', color: 'var(--text-main)' }}>
+                        <span style={{ fontWeight: '800', fontSize: '1.02rem', color: 'var(--text-main)' }}>
                           {otherUser?.fullName || 'Participant'}
                         </span>
                       </div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
-                        Last seen 10:30 AM • Project: <strong className="text-pink">{activeConvData.project?.title}</strong>
+                        Project: <strong className="text-pink">{activeConvData.project?.title}</strong>
                       </div>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', color: 'var(--text-muted)' }}>
-                    <Phone size={18} style={{ cursor: 'pointer' }} />
-                    <Video size={18} style={{ cursor: 'pointer' }} />
-                    <MoreVertical size={18} style={{ cursor: 'pointer' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', color: 'var(--text-muted)' }}>
+                    <Phone size={17} style={{ cursor: 'pointer' }} />
+                    <Video size={17} style={{ cursor: 'pointer' }} />
+                    <MoreVertical size={17} style={{ cursor: 'pointer' }} />
                   </div>
                 </div>
 
@@ -331,7 +354,7 @@ function MessagesContent() {
                 <div
                   style={{
                     flex: 1,
-                    padding: '24px',
+                    padding: 'clamp(14px, 3vw, 24px)',
                     overflowY: 'auto',
                     display: 'flex',
                     flexDirection: 'column',
@@ -366,7 +389,7 @@ function MessagesContent() {
                         >
                           <div
                             style={{
-                              maxWidth: '70%',
+                              maxWidth: '85%',
                               padding: '12px 18px',
                               borderRadius: '16px',
                               background: isMe
@@ -426,15 +449,15 @@ function MessagesContent() {
                 <form
                   onSubmit={handleSendMessage}
                   style={{
-                    padding: '16px 20px',
+                    padding: '14px 16px',
                     borderTop: '1px solid var(--border-color)',
                     background: 'var(--bg-panel)',
                     display: 'flex',
-                    gap: '12px',
+                    gap: '10px',
                     alignItems: 'center',
                   }}
                 >
-                  <button type="button" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer' }}>
+                  <button type="button" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', flexShrink: 0 }}>
                     <Paperclip size={19} />
                   </button>
 
@@ -445,12 +468,13 @@ function MessagesContent() {
                     onChange={(e) => setNewMessage(e.target.value)}
                     style={{
                       flex: 1,
-                      padding: '12px 18px',
+                      minWidth: 0,
+                      padding: '11px 16px',
                       borderRadius: '24px',
                       background: 'var(--bg-input)',
                       border: '1px solid var(--border-color)',
                       color: 'var(--text-main)',
-                      fontSize: '0.95rem',
+                      fontSize: '0.92rem',
                       outline: 'none',
                     }}
                   />
@@ -459,8 +483,8 @@ function MessagesContent() {
                     type="submit"
                     disabled={sending || !newMessage.trim()}
                     style={{
-                      width: '42px',
-                      height: '42px',
+                      width: '38px',
+                      height: '38px',
                       borderRadius: '50%',
                       background: 'linear-gradient(135deg, #F48AC2 0%, #7C3AED 100%)',
                       border: 'none',
@@ -471,14 +495,15 @@ function MessagesContent() {
                       cursor: sending || !newMessage.trim() ? 'not-allowed' : 'pointer',
                       opacity: sending || !newMessage.trim() ? 0.6 : 1,
                       boxShadow: '0 4px 12px rgba(244, 138, 194, 0.3)',
+                      flexShrink: 0,
                     }}
                   >
-                    <Send size={16} />
+                    <Send size={15} />
                   </button>
                 </form>
               </div>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
+              <div className="conv-chat-panel" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', padding: '40px' }}>
                 Select a conversation to view message history.
               </div>
             )}
@@ -490,6 +515,16 @@ function MessagesContent() {
         @media (max-width: 820px) {
           .messages-split-view {
             grid-template-columns: 1fr !important;
+            min-height: 560px !important;
+          }
+          .mobile-back-conv-btn {
+            display: inline-flex !important;
+          }
+          .has-active-conv .conv-list-panel {
+            display: none !important;
+          }
+          .no-active-conv .conv-chat-panel {
+            display: none !important;
           }
         }
       `}</style>

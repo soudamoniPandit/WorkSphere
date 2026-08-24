@@ -120,7 +120,7 @@ export default function ClientProjectsPage() {
   };
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '36px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 36px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
         
         {/* Header */}
@@ -129,7 +129,7 @@ export default function ClientProjectsPage() {
             <span className="badge badge-aqua" style={{ fontSize: '0.75rem', padding: '3px 10px', marginBottom: '8px' }}>
               <Sparkles size={12} /> Client Project Manager
             </span>
-            <h1 className="editorial-title" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.6rem)', color: 'var(--text-main)', marginBottom: '8px' }}>
+            <h1 className="editorial-title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)', color: 'var(--text-main)', marginBottom: '8px' }}>
               My Posted <span style={{ color: 'var(--accent-pink)' }}>Projects</span>
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>

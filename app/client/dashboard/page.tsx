@@ -85,7 +85,7 @@ export default function ClientDashboardPage() {
   const recentProjects = stats?.recentProjects || [];
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '36px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 36px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
         
         {/* ================= HERO HEADER (Reference Image 3) ================= */}
@@ -286,6 +286,7 @@ export default function ClientDashboardPage() {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         gap: '16px',
+                        flexWrap: 'wrap',
                       }}
                     >
                       {/* Candidate Avatar & Info */}
@@ -472,7 +473,7 @@ export default function ClientDashboardPage() {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))',
                 gap: '14px',
               }}
             >

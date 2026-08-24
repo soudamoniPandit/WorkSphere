@@ -85,7 +85,7 @@ export default function FreelancerDashboardPage() {
   const availableProjects = stats?.availableProjects || [];
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '36px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 36px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
         
         {/* Welcome Header */}
@@ -99,7 +99,7 @@ export default function FreelancerDashboardPage() {
           <h1
             className="editorial-title"
             style={{
-              fontSize: 'clamp(2.4rem, 4.5vw, 3.6rem)',
+              fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)',
               color: 'var(--text-main)',
               marginBottom: '10px',
             }}
@@ -107,7 +107,7 @@ export default function FreelancerDashboardPage() {
             Welcome back, <span style={{ color: 'var(--accent-aqua)' }}>{stats?.user?.fullName || 'Freelancer'}</span>
           </h1>
 
-          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '24px', maxWidth: '680px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', marginBottom: '24px', maxWidth: '680px' }}>
             Explore high-budget opportunities, track your active bids, and collaborate with verified clients.
           </p>
 
@@ -115,14 +115,14 @@ export default function FreelancerDashboardPage() {
             <Link
               href="/projects"
               className="btn-primary"
-              style={{ padding: '13px 26px', fontSize: '1rem' }}
+              style={{ padding: '12px 24px', fontSize: '0.98rem' }}
             >
               <Compass size={18} /> Explore open projects
             </Link>
             <Link
               href="/profile"
               className="btn-secondary"
-              style={{ padding: '13px 24px', fontSize: '1rem' }}
+              style={{ padding: '12px 22px', fontSize: '0.98rem' }}
             >
               <UserCheck size={18} className="text-aqua" /> Portfolio & Profile
             </Link>
@@ -133,67 +133,67 @@ export default function FreelancerDashboardPage() {
         <section
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))',
+            gap: '14px',
             marginBottom: '36px',
           }}
         >
-          <div className="glass-panel glass-panel-interactive" style={{ padding: '22px', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>Available Projects</span>
-              <div style={{ background: 'var(--accent-aqua-subtle)', color: 'var(--accent-aqua)', padding: '8px', borderRadius: '10px' }}>
-                <Compass size={18} />
+          <div className="glass-panel glass-panel-interactive" style={{ padding: '18px 20px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: '600' }}>Available Projects</span>
+              <div style={{ background: 'var(--accent-aqua-subtle)', color: 'var(--accent-aqua)', padding: '6px', borderRadius: '8px' }}>
+                <Compass size={16} />
               </div>
             </div>
-            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--accent-aqua)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--accent-aqua)' }}>
               {metrics.availableProjects || 0}
             </div>
           </div>
 
-          <div className="glass-panel glass-panel-interactive" style={{ padding: '22px', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>My Proposals</span>
-              <div style={{ background: 'var(--accent-lavender-subtle)', color: 'var(--accent-violet)', padding: '8px', borderRadius: '10px' }}>
-                <FileText size={18} />
+          <div className="glass-panel glass-panel-interactive" style={{ padding: '18px 20px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: '600' }}>My Proposals</span>
+              <div style={{ background: 'var(--accent-lavender-subtle)', color: 'var(--accent-violet)', padding: '6px', borderRadius: '8px' }}>
+                <FileText size={16} />
               </div>
             </div>
-            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--text-main)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--text-main)' }}>
               {metrics.myProposals || 0}
             </div>
           </div>
 
-          <div className="glass-panel glass-panel-interactive" style={{ padding: '22px', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>Pending Review</span>
-              <div style={{ background: 'var(--bg-surface-elevated)', color: 'var(--text-muted)', padding: '8px', borderRadius: '10px' }}>
-                <Clock size={18} />
+          <div className="glass-panel glass-panel-interactive" style={{ padding: '18px 20px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: '600' }}>Pending Review</span>
+              <div style={{ background: 'var(--bg-surface-elevated)', color: 'var(--text-muted)', padding: '6px', borderRadius: '8px' }}>
+                <Clock size={16} />
               </div>
             </div>
-            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--text-muted)' }}>
               {metrics.pendingProposals || 0}
             </div>
           </div>
 
-          <div className="glass-panel glass-panel-interactive" style={{ padding: '22px', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>Shortlisted</span>
-              <div style={{ background: 'var(--accent-pink-subtle)', color: 'var(--accent-pink)', padding: '8px', borderRadius: '10px' }}>
-                <Star size={18} />
+          <div className="glass-panel glass-panel-interactive" style={{ padding: '18px 20px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: '600' }}>Shortlisted</span>
+              <div style={{ background: 'var(--accent-pink-subtle)', color: 'var(--accent-pink)', padding: '6px', borderRadius: '8px' }}>
+                <Star size={16} />
               </div>
             </div>
-            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--accent-pink)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--accent-pink)' }}>
               {metrics.shortlistedProposals || 0}
             </div>
           </div>
 
-          <div className="glass-panel glass-panel-interactive" style={{ padding: '22px', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>Active Contracts</span>
-              <div style={{ background: 'var(--accent-success-subtle)', color: 'var(--accent-success)', padding: '8px', borderRadius: '10px' }}>
-                <CheckCircle2 size={18} />
+          <div className="glass-panel glass-panel-interactive" style={{ padding: '18px 20px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: '600' }}>Active Contracts</span>
+              <div style={{ background: 'var(--accent-success-subtle)', color: 'var(--accent-success)', padding: '6px', borderRadius: '8px' }}>
+                <CheckCircle2 size={16} />
               </div>
             </div>
-            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--accent-success)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--accent-success)' }}>
               {metrics.acceptedProposals || 0}
             </div>
           </div>
@@ -203,13 +203,13 @@ export default function FreelancerDashboardPage() {
         <section
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
-            gap: '28px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
+            gap: '24px',
           }}
           className="freelancer-dash-grid"
         >
           {/* Left: My Proposals Status */}
-          <div className="glass-panel" style={{ padding: '28px', borderRadius: '18px' }}>
+          <div className="glass-panel" style={{ padding: 'clamp(18px, 4vw, 28px)', borderRadius: '18px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px' }}>
               <div>
                 <h2 style={{ fontSize: '1.35rem', fontWeight: '800', color: 'var(--text-main)' }}>My Proposals Status</h2>

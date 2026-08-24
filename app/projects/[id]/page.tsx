@@ -163,7 +163,7 @@ export default function ProjectDetailsPage() {
   const isFreelancer = currentUser?.role === 'FREELANCER';
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '28px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 28px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
         
         {/* Back Link */}
@@ -188,8 +188,8 @@ export default function ProjectDetailsPage() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1.35fr) minmax(380px, 0.95fr)',
-            gap: '36px',
+            gridTemplateColumns: 'minmax(0, 1.35fr) minmax(0, 0.95fr)',
+            gap: '28px',
             alignItems: 'start',
           }}
           className="project-editorial-grid"
@@ -810,6 +810,11 @@ export default function ProjectDetailsPage() {
           }
           .visual-ref-grid {
             grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        @media (max-width: 540px) {
+          .visual-ref-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>

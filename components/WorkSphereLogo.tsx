@@ -96,14 +96,16 @@ export default function WorkSphereLogo({
 
       {displayTitle && (
         <span
+          className="worksphere-logo-text"
           style={{
-            fontSize: '1.35rem',
+            fontSize: 'clamp(1.15rem, 4vw, 1.35rem)',
             fontWeight: '700',
             color: 'var(--text-main)',
             letterSpacing: '-0.4px',
             lineHeight: 1,
             display: 'inline-flex',
             alignItems: 'center',
+            whiteSpace: 'nowrap',
           }}
         >
           WorkSphere

@@ -194,7 +194,7 @@ export default function ClientProjectProposalsPage() {
   const isHired = project.status === 'IN_PROGRESS' || project.status === 'COMPLETED';
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '32px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 32px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
         
         {/* Back Link */}
@@ -220,7 +220,7 @@ export default function ClientProjectProposalsPage() {
           <h1
             className="editorial-title"
             style={{
-              fontSize: 'clamp(2.2rem, 4vw, 3.2rem)',
+              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
               color: 'var(--text-main)',
               marginBottom: '18px',
             }}
@@ -283,8 +283,8 @@ export default function ClientProjectProposalsPage() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1.45fr) minmax(340px, 0.85fr)',
-            gap: '36px',
+            gridTemplateColumns: 'minmax(0, 1.45fr) minmax(0, 0.85fr)',
+            gap: '28px',
             alignItems: 'start',
           }}
           className="proposals-review-grid"
@@ -934,10 +934,17 @@ export default function ClientProjectProposalsPage() {
             grid-template-columns: 1fr !important;
           }
         }
-        @media (max-width: 760px) {
+        @media (max-width: 820px) {
           .candidate-row {
-            grid-template-columns: 1fr !important;
-            gap: 12px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 14px !important;
+          }
+          .candidate-row > div {
+            width: 100% !important;
+            text-align: left !important;
+            padding: 0 !important;
           }
         }
       `}</style>

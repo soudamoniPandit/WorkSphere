@@ -75,7 +75,7 @@ export default function CreateProjectPage() {
   };
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '36px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 36px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         
         {/* Header */}
@@ -83,7 +83,7 @@ export default function CreateProjectPage() {
           <span className="badge badge-aqua" style={{ fontSize: '0.75rem', padding: '3px 10px', marginBottom: '8px' }}>
             <Sparkles size={12} /> Client Hiring Command Center
           </span>
-          <h1 className="editorial-title" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.6rem)', color: 'var(--text-main)', marginBottom: '8px' }}>
+          <h1 className="editorial-title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)', color: 'var(--text-main)', marginBottom: '8px' }}>
             Post a New <span style={{ color: 'var(--accent-pink)' }}>Project</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>
@@ -100,14 +100,14 @@ export default function CreateProjectPage() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1.4fr) minmax(320px, 0.85fr)',
-            gap: '36px',
+            gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 0.85fr)',
+            gap: '28px',
             alignItems: 'start',
           }}
           className="post-project-grid"
         >
           {/* Main Form */}
-          <div className="glass-panel" style={{ padding: '36px', borderRadius: '20px', background: 'var(--bg-panel)' }}>
+          <div className="glass-panel" style={{ padding: 'clamp(20px, 4vw, 36px)', borderRadius: '20px', background: 'var(--bg-panel)' }}>
             <form onSubmit={handleSubmit}>
               {/* Project Title */}
               <div style={{ marginBottom: '24px' }}>

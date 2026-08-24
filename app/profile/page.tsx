@@ -260,18 +260,18 @@ export default function ProfilePage() {
     : null;
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '36px 24px 80px' }}>
-      <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 36px) clamp(12px, 3.5vw, 24px) 80px' }}>
+      <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
         
-        {/* Top Action Bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+        {/* Top Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <span className="badge badge-aqua" style={{ fontSize: '0.75rem', padding: '3px 10px', marginBottom: '6px' }}>
+            <span className="badge badge-violet" style={{ fontSize: '0.75rem', padding: '3px 10px', marginBottom: '8px' }}>
               <Sparkles size={12} /> {isClient ? 'Client Organization Profile' : 'Verified Talent Portfolio'}
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             {!isClient && (
               <button
                 onClick={() => setShowAddPortfolioModal(true)}
@@ -658,8 +658,8 @@ export default function ProfilePage() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                    gap: '24px',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+                    gap: '20px',
                   }}
                 >
                   {portfolioItems.map((item) => (
@@ -896,10 +896,12 @@ export default function ProfilePage() {
               style={{
                 width: '100%',
                 maxWidth: '560px',
-                padding: '32px',
+                padding: 'clamp(20px, 5vw, 32px)',
                 borderRadius: '20px',
                 background: 'var(--bg-panel)',
                 position: 'relative',
+                maxHeight: '90vh',
+                overflowY: 'auto',
               }}
             >
               <button

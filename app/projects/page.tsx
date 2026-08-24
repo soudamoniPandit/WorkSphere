@@ -68,7 +68,7 @@ export default function ProjectsDirectoryPage() {
   };
 
   return (
-    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: '36px 24px 80px' }}>
+    <div className="hero-network-bg grain-overlay" style={{ minHeight: '100vh', padding: 'clamp(20px, 4vw, 36px) clamp(12px, 3.5vw, 24px) 80px' }}>
       <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
         
         {/* Header */}
@@ -77,7 +77,7 @@ export default function ProjectsDirectoryPage() {
             <span className="badge badge-aqua" style={{ fontSize: '0.75rem', padding: '3px 10px', marginBottom: '8px' }}>
               <Sparkles size={12} /> Marketplace Directory
             </span>
-            <h1 className="editorial-title" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.6rem)', color: 'var(--text-main)', marginBottom: '8px' }}>
+            <h1 className="editorial-title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)', color: 'var(--text-main)', marginBottom: '8px' }}>
               Explore <span style={{ color: 'var(--accent-pink)' }}>Projects</span>
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>
@@ -87,8 +87,8 @@ export default function ProjectsDirectoryPage() {
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="glass-panel" style={{ padding: '20px 24px', marginBottom: '36px', borderRadius: '16px' }}>
-          <form onSubmit={handleSearchSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', alignItems: 'center' }}>
+        <div className="glass-panel" style={{ padding: 'clamp(16px, 3vw, 20px) clamp(14px, 3.5vw, 24px)', marginBottom: '32px', borderRadius: '16px' }}>
+          <form onSubmit={handleSearchSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '12px', alignItems: 'center' }}>
             {/* Keyword Search */}
             <div style={{ position: 'relative' }}>
               <Search size={17} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
@@ -157,7 +157,7 @@ export default function ProjectsDirectoryPage() {
 
         {/* Projects Grid */}
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '100px 24px', color: 'var(--text-muted)' }}>
+          <div style={{ textAlign: 'center', padding: '80px 24px', color: 'var(--text-muted)' }}>
             <Sparkles size={36} className="text-aqua" style={{ marginBottom: '16px', animation: 'spin 3s linear infinite' }} />
             <p style={{ fontSize: '1.1rem' }}>Discovering marketplace projects...</p>
           </div>
@@ -175,8 +175,8 @@ export default function ProjectsDirectoryPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
-              gap: '24px',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
+              gap: '20px',
               marginBottom: '40px',
             }}
           >
@@ -185,7 +185,7 @@ export default function ProjectsDirectoryPage() {
                 key={project.id}
                 className="glass-panel glass-panel-interactive"
                 style={{
-                  padding: '26px',
+                  padding: 'clamp(18px, 3.5vw, 26px)',
                   borderRadius: '16px',
                   display: 'flex',
                   flexDirection: 'column',
